@@ -16,8 +16,6 @@ public class DataInitializer {
             repository.save(new Product("phone", 99.99, "put this in your pocket!", "in-stock", 10));
             repository.save(new Product("basketball", 5, "bouncy ball", "out-of-stock", 0));
             repository.save(new Product("jacket", 50, "keeps u warm", "pre-order", 100));
-
-
         };
     }
 }

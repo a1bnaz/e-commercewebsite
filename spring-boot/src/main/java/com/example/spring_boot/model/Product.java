@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 
 import java.math.BigInteger;
 
@@ -21,10 +22,22 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Assuming auto-generated IDs
     private Long id;
 
+    @NotBlank(message = "Product name cannot be empty.")
+    @Size(min = 2, max = 50, message = "Product name must be between 2 and 50 characters.")
     private String name;
+
+    @NotNull(message =  "Price cannot be null.")
+    @Min(value = 0)
     private double price;
+
+    @NotBlank(message = "Product must have a description")
+    @Size(min = 0, max = 100, message = "Description must be between 0 and 100 characters.")
     private String description;
+
+    @NotBlank(message = "Must state availability.")
     private String availability; // in stock, out of stock
+
+    @PositiveOrZero(message = "Must be 0 or above.")
     private int quantity;
 
     /* NOTES
