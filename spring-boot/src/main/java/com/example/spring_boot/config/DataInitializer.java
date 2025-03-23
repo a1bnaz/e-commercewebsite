@@ -7,15 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 // this class is used to load in temporary sample data!!!
-@Configuration
-public class DataInitializer {
 
-    @Bean
-    CommandLineRunner initDatabase(ProductRepo repository){
-        return args -> {
-            repository.save(new Product("phone", 99.99, "put this in your pocket!", "in-stock", 10));
-            repository.save(new Product("basketball", 5, "bouncy ball", "out-of-stock", 0));
-            repository.save(new Product("jacket", 50, "keeps u warm", "pre-order", 100));
-        };
-    }
-}
+//@Configuration
+//public class DataInitializer {
+//
+//    @Bean
+//    CommandLineRunner initDatabase(ProductRepo repository){
+//        return args -> {
+//            repository.save(new Product("phone", 99.99, "put this in your pocket!", "in-stock", 10));
+//            repository.save(new Product("basketball", 5, "bouncy ball", "out-of-stock", 0));
+//            repository.save(new Product("jacket", 50, "keeps u warm", "pre-order", 100));
+//        };
+//    }
+//}
