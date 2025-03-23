@@ -1,0 +1,38 @@
+setting up postgresql roadmap:
+1. set up postgresql: install postgresl
+2. springboot  setup:
+    - add postgresql dependencies in pom.xml file
+    - configure the database connection in application.properties(url, username, password, etc..)
+
+3. entity classes: define your data models as java classes annotated with JPA annotations
+4. repositories: ues spring data jpa's crud repository or jpa respository to manage crud operations
+5. basic sql: learn a few simple sql commands to understand how to ineract with the database manually (optional, but helpful for troubleshooting)
+
+sql learning roadmap:
+1. foundations of sql
+    ** introduction to databases **
+    - what is a database?
+    - SQl vs NoSQL databases
+    - relational databases (RDBMS) overview
+
+
+    ** basic sql queries **
+    - SELECT statements
+    - filtering data with WHERE
+    - sorting results with ORDER BY
+    - limiting results with LIMIT
+
+
+    ** working with tables **
+    - creating tables (CREATE TABLE)
+    - inserting data (INSERT INTO)
+    - updating data (UPDATE)
+    - deleting data (DELETE)
+
+
+
+    **  basic constraints **
+    - primary keys (PRIMARY KEY)
+    - unique constraints (UNIQUE)
+    - not null (NOT NULL)
+    - default values (DEFAULT)
