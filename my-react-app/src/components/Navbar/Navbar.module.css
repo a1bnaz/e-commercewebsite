@@ -1,0 +1,33 @@
+
+.container{
+    /* height: 100vh; */
+    width: 100%;
+    /* border: 1px dashed yellow; */
+}
+.NavBar{
+    
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.Logo{
+    object-fit: contain;
+    height: 100%;
+}
+.Buttons{
+    margin: 30px;
+    align-items: center;
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+}
+.SearchBar{
+    
+    justify-items: center;
+}
+.searchInput{
+    width: 350px;
+    border-radius: 4px;
+}
+

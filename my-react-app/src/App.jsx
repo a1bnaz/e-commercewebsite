@@ -1,8 +1,9 @@
-import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home.jsx"
-import Error from "./pages/Error.jsx"
+import Home from "./pages/Home/Home.jsx";
+import Error from "./pages/Error/Error.jsx";
+import Login from "./pages/Login/Login.jsx";
 
 function App() {
   
@@ -12,9 +13,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           
+          {/* First Page */}
+          <Route path="/" element={<Login />} />
+
+          {/* Login Page */}
+          <Route path="/login" element={<Login />} />
+
           {/* Home Page */}
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           
+          {/* Error Page */}
           <Route path="*" element={<Error />} /> 
 
         </Routes>
