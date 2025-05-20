@@ -3,23 +3,38 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import styles from "./Login.module.css";
 
-const EMAIL = "test";
-const PASSWORD = "test";
 
 export default function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     
-    function handleFormSubmit(event) {
-        
-        if (email == EMAIL && password == PASSWORD) {
-            event.preventDefault();
-            navigate("/home");
-        }
+    async function handleFormSubmit(event) {
+        event.preventDefault();
 
-        // this is the authentication function
-        // for now just redirect to the home page
+        try {
+            const response = await fetch("http://localhost:8080/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+            if (response.ok) {
+                // optionally store a token if you later add JWT
+
+                const userData = await response.json();
+                localStorage.setItem("loggedInUser", JSON.stringify(userData));
+                navigate("/home");
+            } else {
+                const message = await response.text();
+                setError(message || "Login failed");
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            setError("Something went wrong. Try again.");
+        }
     }
 
     return (

@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home.jsx";
 import Error from "./pages/Error/Error.jsx";
 import Login from "./pages/Login/Login.jsx";
+import Listings from "./pages/Listings/Listings.jsx";
+import MyListings from "./pages/MyListings/MyListings.jsx";
 
 function App() {
   
@@ -13,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           
-          {/* First Page */}
+          {/* Landing Page/First Page */}
           <Route path="/" element={<Login />} />
 
           {/* Login Page */}
@@ -21,6 +23,12 @@ function App() {
 
           {/* Home Page */}
           <Route path="/home" element={<Home />} />
+
+          {/* Listings Page */}
+          <Route path="/listings" element={<Listings />} />
+
+          {/* My Listings Page */}
+          <Route path="/mylistings" element={<MyListings />} />
           
           {/* Error Page */}
           <Route path="*" element={<Error />} /> 

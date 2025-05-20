@@ -13,6 +13,9 @@ export default function Home() {
     const [loading, setLoading] = useState(true); // state to handle loading state
     const [error, setError] = useState(null); // for error handling
 
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    console.log(user);
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -47,17 +50,19 @@ export default function Home() {
                 </div>
                 {/* load in from the api each of the products */}
                 <div className={styles.ListingsGridContainer}>
+                    <div className={styles.ListingsGrid}>
 
-                    {loading == false && !error ? products.slice(0,6).map((product) => (
-                        <div key={product.id} className={styles.Listing}>
-                            <img className={styles.ListingImage} src={sideeyedog} />
-                            <p className={styles.ListingName}>{product.name}</p>
-                            <p className={styles.ListingPrice}>${product.price}</p>
-                            <button className={styles.ListingButton}>Add to Cart</button>
-                        </div>
-                    )) : <div className={styles.Loading}>Loading...</div>}
+                        {loading == false && !error ? products.slice(0, 6).map((product) => (
+                            <div key={product.id} className={styles.Listing}>
+                                <img className={styles.ListingImage} src={sideeyedog} />
+                                <p className={styles.ListingName}>{product.name}</p>
+                                <p className={styles.ListingPrice}>${product.price}</p>
+                                <button className={styles.ListingButton}>Add to Cart</button>
+                            </div>
+                        )) : <div className={styles.Loading}>Loading...</div>}
 
-                    
+
+                    </div>
                 </div>
             </div>
         </>
