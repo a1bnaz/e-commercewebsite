@@ -7,18 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.spring_boot.service.ProductService;
 
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/products")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping // an empty GetMapping annotation means it just goes to the base root, which is /api
+    @GetMapping // an empty GetMapping annotation means it just goes to the base root, which is /api/products
     public List<Product> getAllProducts(){
         return productService.getAllProducts();
     }
