@@ -3,7 +3,6 @@ package com.example.spring_boot.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
-import java.math.BigInteger;
 
 @Entity
 @Table(name="Product") // sets the name of the table, default name is the name of the class
@@ -25,11 +24,12 @@ public class Product {
     @Size(min = 0, max = 100, message = "Description must be between 0 and 100 characters.")
     private String description;
 
-    @NotBlank(message = "Must state availability.")
-    private String availability; // in stock, out of stock
+    @ManyToOne // this means that many products can belong to one user (many-to-one relationship)
+    // tells JPA to create a foreign key column named "user_id" in the Product table
+    // links each product to the user that created it. "nullable = false" means every product *must* have a user
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @PositiveOrZero(message = "Must be 0 or above.")
-    private int quantity;
 
     public Product(){}
 
@@ -38,8 +38,6 @@ public class Product {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.availability = availability;
-        this.quantity = quantity;
     }
 
     public void setId(Long id){
@@ -72,21 +70,5 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }

@@ -36,3 +36,11 @@ sql learning roadmap:
     - unique constraints (UNIQUE)
     - not null (NOT NULL)
     - default values (DEFAULT)
+
+
+steps to getting the backend and the frontend to talk to each other:
+1. make sure you have endpoints in your controller that your frontend can fetch data from.
+2. enable CORS in your backend
+3. enable CORS in a specific controller
+4. fetch data from react
+5. test connection by running backend and running frontend

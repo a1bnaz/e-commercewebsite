@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +39,6 @@ public class ProductService {
             // 3. update the fields
             existingProduct.setName(updatedProduct.getName());
             existingProduct.setPrice(updatedProduct.getPrice());
-            existingProduct.setAvailability(updatedProduct.getAvailability());
-            existingProduct.setQuantity(updatedProduct.getQuantity());
             existingProduct.setDescription(updatedProduct.getDescription());
 
             return productRepository.save(existingProduct);
