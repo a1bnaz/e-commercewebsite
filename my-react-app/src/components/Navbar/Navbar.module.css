@@ -1,0 +1,41 @@
+
+.container{
+    /* height: 100vh; */
+    width: 100%;
+    /* border: 1px dashed yellow; */
+}
+.NavBar{
+    border: 1px solid black;
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.Logo{
+    object-fit: contain;
+    height: 100%;
+}
+.Buttons{
+    border: 1px solid black;
+    margin: 30px;
+    align-items: center;
+    width: 12%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+.Separator {
+    color: #888;
+    margin: 0 10px;
+    font-weight: bold;
+    font-size: 18px;
+    align-self: center;
+}
+.SearchBar{
+    justify-items: center;
+}
+.searchInput{
+    width: 350px;
+    border-radius: 4px;
+}
+
