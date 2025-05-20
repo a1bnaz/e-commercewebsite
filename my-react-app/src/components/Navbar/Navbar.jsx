@@ -22,26 +22,25 @@ export default function Navbar() {
                     </a>
                 </div>
 
+                <div className={styles.SearchBar}>
+                    <form>
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className={styles.searchInput}
+                        />
+                        <button onClick={handleSearchButton} type="submit" className={styles.searchButton}>
+                            Search
+                        </button>
+                    </form>
+                </div>
+
                 <div className={styles.Buttons}>
                     <a href="/listings">Listings</a>
                     <span className={styles.Separator}>|</span>
                     <a href="/mylistings">My Listings</a>
                 </div>
             </div>
-            <div className={styles.SearchBar}>
-                <form>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className={styles.searchInput}
-                    />
-                    <button onClick={handleSearchButton} type="submit" className={styles.searchButton}>
-                        Search
-                    </button>
-                </form>
-            </div>
-            
-            
         </div>
     )
 }
