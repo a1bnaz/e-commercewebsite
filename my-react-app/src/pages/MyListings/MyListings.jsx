@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 
 import Navbar from "../../components/Navbar/NavBar";
+import CreateListingModal from "../../components/CreateListingModal/CreateListingModal";
 
 import styles from "./MyListings.module.css";
 import sideeyedog from "../../assets/sideeyedog.png";
@@ -14,6 +15,8 @@ export default function UserListings() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [showModal, setShowModal] = useState(false);
 
     let noProducts = false;
     if (products.length == 0) {
@@ -39,6 +42,10 @@ export default function UserListings() {
         fetchUserProducts();
     })
 
+    function handleCreateListingButton() {
+        setShowModal(true);
+    }
+
     return (
         <>
             <div className={styles.container}>
@@ -47,7 +54,7 @@ export default function UserListings() {
                 <div className={styles.heading}>
                     <p className={styles.header}>My Listings</p>
 
-                    <button className={styles.createListingButton}>Create Listing</button>
+                    <button onClick={handleCreateListingButton} className={styles.createListingButton}>Create Listing</button>
                 </div>
 
                 <div className={styles.listingsGrid}>
@@ -76,6 +83,12 @@ export default function UserListings() {
                     }
                 </div>
             </div>
+
+            {/* {showModal && <CreateListingModal onClose={() => setShowModal(false)} />} */}
+            {showModal && (
+                <CreateListingModal onClose={() => setShowModal(false)} />
+            )}
+
         </>
     )
 }

@@ -48,7 +48,7 @@ export default function Listings() {
                             <img className={styles.ListingImage} src={sideeyedog} />
                             <p className={styles.ListingName}>{product.name}</p>
                             <p className={styles.ListingPrice}>${product.price}</p>
-                            <button className={styles.ListingButton}>Add to Cart</button>
+                            <button className={styles.ListingButton}>View Listing</button>
                         </div>
                     )) : <div className={styles.Loading}>Loading...</div>}
                 </div>
