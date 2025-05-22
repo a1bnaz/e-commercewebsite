@@ -77,6 +77,14 @@
     display: grid;
     grid-template-columns: 50% 50%
 }
+.Loading{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+}
+.noCurrentListings{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+}
 
 /* 
 - use rem/em for font sizes and spacing for accessibility

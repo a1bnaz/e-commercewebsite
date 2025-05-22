@@ -13,8 +13,8 @@ export default function Home() {
     const [loading, setLoading] = useState(true); // state to handle loading state
     const [error, setError] = useState(null); // for error handling
 
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    console.log(user);
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    console.log(loggedInUser);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -45,7 +45,7 @@ export default function Home() {
                 <Navbar/>
                 <div className={styles.MessageContainer}>
                     <p className={styles.Message}>
-                        Welcome back, ___!
+                        Welcome back, {loggedInUser.username}!
                     </p>
                 </div>
                 {/* load in from the api each of the products */}
