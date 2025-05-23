@@ -1,28 +1,94 @@
 
+import { useState, useEffect } from "react";
 
 import Navbar from "../../components/Navbar/NavBar";
+import CreateListingModal from "../../components/CreateListingModal/CreateListingModal";
 
 import styles from "./MyListings.module.css";
+import sideeyedog from "../../assets/sideeyedog.png";
 
 
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
 export default function UserListings() {
     
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const [showModal, setShowModal] = useState(false);
+
+    let noProducts = false;
+    if (products.length == 0) {
+        noProducts = true;
+    }
+
+    useEffect(() => {
+        const fetchUserProducts = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/products/users/${loggedInUser.id}`);
+                if (!response.ok) {
+                    throw new Error("failed to fetch products");
+                }
+                const myProducts = await response.json();
+                setProducts(myProducts);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserProducts();
+    })
+
+    function handleCreateListingButton() {
+        setShowModal(true);
+    }
+
     return (
         <>
-            <Navbar />
-            {/* display only what belongs to the user... send a request to the api to check what products belong to the user that is in the current localstorage session */}
+            <div className={styles.container}>
+                <Navbar />
 
-            {/* 
-            const CURRENT_USER = JSON.parse(localStorage.getItem("loggedInUser"));
+                <div className={styles.heading}>
+                    <p className={styles.header}>My Listings</p>
 
-            go to /api/products and maybe loop through all of the products' user_id's and see if any of them match with CURRENT_USER.id??? ask chatgpt the best way to approach this situation (temporary solution)
-            
-            
-            */}
-            <div>
-                User Listings
+                    <button onClick={handleCreateListingButton} className={styles.createListingButton}>Create Listing</button>
+                </div>
+
+                <div className={styles.listingsGrid}>
+                    {
+                        !loading && !error ? products.map((product) => (
+                        <div key={product.id} className={styles.listing}>
+                            <div className={styles.listingImageContainer}>
+                                <img className={styles.listingImage} src={sideeyedog} />
+                            </div>
+
+                            <div className={styles.listingInformationContainer}>
+                                <p className={styles.listingName}>{product.name}</p>
+                                <p className={styles.listingPrice}>{product.price}</p>
+                            </div>
+
+                            <div className={styles.listingButtonsContainer}>
+                                <button>Edit Listing</button>
+                                <button>Delete Listing</button>
+                            </div>
+
+                        </div>
+                        )) : <div className={styles.Loading}>Loading...</div>
+                    }
+                    {
+                        !noProducts ? "" : <div className={styles.noCurrentListings}>You have no current listings</div>
+                    }
+                </div>
             </div>
+
+            {/* {showModal && <CreateListingModal onClose={() => setShowModal(false)} />} */}
+            {showModal && (
+                <CreateListingModal onClose={() => setShowModal(false)} />
+            )}
+
         </>
     )
 }
