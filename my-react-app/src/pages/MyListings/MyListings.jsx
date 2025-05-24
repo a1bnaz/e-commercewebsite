@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import Navbar from "../../components/Navbar/NavBar";
 import CreateListingModal from "../../components/CreateListingModal/CreateListingModal";
+import ConfirmationDeleteModal from "../../components/ConfirmationDeleteModal.jsx/ConfirmationDeleteModal";
 
 import styles from "./MyListings.module.css";
 import sideeyedog from "../../assets/sideeyedog.png";
@@ -15,8 +16,12 @@ export default function UserListings() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentProductId, setCurrentProductId] = useState(null);
 
-    const [showModal, setShowModal] = useState(false);
+    const [showCreateListingModal, setShowCreateListingModal] = useState(false);
+    const [showConfirmationDeleteModal, setShowConfirmationDeleteModal] = useState(false);
+
+    
 
     let noProducts = false;
     if (products.length == 0) {
@@ -43,7 +48,12 @@ export default function UserListings() {
     })
 
     function handleCreateListingButton() {
-        setShowModal(true);
+        setShowCreateListingModal(true);
+    }
+
+    function handleDeleteListingButton(e, product_id) {
+        setCurrentProductId(product_id)
+        setShowConfirmationDeleteModal(true)
     }
 
     return (
@@ -72,7 +82,8 @@ export default function UserListings() {
 
                             <div className={styles.listingButtonsContainer}>
                                 <button>Edit Listing</button>
-                                <button>Delete Listing</button>
+                                {/* <button onClick={handleDeleteListingButton}>Delete Listing</button> */}
+                                <button onClick={(e) => handleDeleteListingButton(e, product.id)}>Delete Listing</button>
                             </div>
 
                         </div>
@@ -84,11 +95,13 @@ export default function UserListings() {
                 </div>
             </div>
 
-            {/* {showModal && <CreateListingModal onClose={() => setShowModal(false)} />} */}
-            {showModal && (
-                <CreateListingModal onClose={() => setShowModal(false)} />
+            {showCreateListingModal && (
+                <CreateListingModal onClose={() => setShowCreateListingModal(false)} />
             )}
 
+            {showConfirmationDeleteModal && (
+                <ConfirmationDeleteModal onClose={() => setShowConfirmationDeleteModal(false)} currentProductId={currentProductId} />
+            )}
         </>
     )
 }

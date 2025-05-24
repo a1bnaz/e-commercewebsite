@@ -1,0 +1,51 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.modalContent{
+    position: absolute;
+    top: 10vh;
+    width: 10vw;
+    height: 15vh;
+    max-width: 60vw;
+    background-color: white;       /* solid white box */
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    border: 2px solid black;        /* optional visible outline */
+    border-radius: 8px;
+
+    display: grid;
+
+}
+.modalHeader{
+   font-family: Arial, Helvetica, sans-serif; 
+   text-align: center;
+   /* means the font size will scale with the viewport but never be smaller than 1rem or larger than 1.5rem */
+   font-size: clamp(1rem, 2vw, 1.5rem);
+    word-break: break-word; /* Prevents overflow */
+}
+.deleteButton{
+    border-radius: 5px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    background-color: tomato;
+}
+.closeButton{
+    border-radius: 5px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    margin-top: 0.25rem;
+}
