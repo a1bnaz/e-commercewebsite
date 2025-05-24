@@ -35,7 +35,11 @@ public class ProductController {
 
     // create a new product
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product){
+    public ResponseEntity<Product> createProduct( /*@Valid*/ @RequestBody Product product){
+        System.out.println("Received product: " + product);
+        System.out.println("User: " + product.getUser());
+        System.out.println("User ID: " + (product.getUser() != null ? product.getUser().getId() : "null"));
+
         Product savedProduct = productService.createProduct(product);
 
         // returns the product object as well as a status code (200 OK)
