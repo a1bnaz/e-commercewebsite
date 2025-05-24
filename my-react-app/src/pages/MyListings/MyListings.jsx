@@ -67,7 +67,7 @@ export default function UserListings() {
 
                             <div className={styles.listingInformationContainer}>
                                 <p className={styles.listingName}>{product.name}</p>
-                                <p className={styles.listingPrice}>{product.price}</p>
+                                <p className={styles.listingPrice}>${product.price}</p>
                             </div>
 
                             <div className={styles.listingButtonsContainer}>
