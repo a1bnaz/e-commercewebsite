@@ -27,7 +27,7 @@ public class Product {
     @ManyToOne // this means that many products can belong to one user (many-to-one relationship)
     // tells JPA to create a foreign key column named "user_id" in the Product table
     // links each product to the user that created it. "nullable = false" means every product *must* have a user
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 
@@ -70,5 +70,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }
