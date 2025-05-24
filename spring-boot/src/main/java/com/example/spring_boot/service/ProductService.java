@@ -50,4 +50,8 @@ public class ProductService {
     public void deleteProduct(Long id){
         productRepository.deleteById(id);
     }
+
+    public List<Product> findByUserId(Long userId) {
+        return productRepository.findByUserId(userId);
+    }
 }

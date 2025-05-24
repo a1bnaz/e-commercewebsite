@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.spring_boot.service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -25,6 +26,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id){
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/users/{userId}")
+    public List<Product> getProductsByUser(@PathVariable Long userId){
+        return productService.findByUserId(userId);
     }
 
     // create a new product
