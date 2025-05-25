@@ -1,16 +1,23 @@
 
-
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import styles from "./Navbar.module.css";
 import sideeyedog from "../../assets/sideeyedog.png";
 
+import ProfileModal from "../../components/ProfileModal/ProfileModal.jsx";
+
 export default function Navbar() {
     
     const navigate = useNavigate();
+    const [showNavBarProfileModal, setShowNavBarProfileModal] = useState(false);
 
     function handleSearchButton() {
         navigate("/listings");
+    }
+
+    function handleNavBarProfileButton() {
+        setShowNavBarProfileModal(true);
     }
 
     return (
@@ -36,11 +43,13 @@ export default function Navbar() {
                 </div>
 
                 <div className={styles.Buttons}>
-                    {/* <a href="/listings">Listings</a> */}
                     <Link to="/listings">Listings</Link>
                     <span className={styles.Separator}>|</span>
-                    {/* <a href="/mylistings">My Listings</a> */}
                     <Link to="/mylistings">My Listings</Link>
+                    <span className={styles.Separator}>|</span>
+                    <button onClick={handleNavBarProfileButton} className={styles.navBarProfileButton}>Me</button>
+
+                    {showNavBarProfileModal && <ProfileModal onClose={() => setShowNavBarProfileModal(false)} />}
                 </div>
             </div>
         </div>
