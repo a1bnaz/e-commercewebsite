@@ -44,3 +44,31 @@ steps to getting the backend and the frontend to talk to each other:
 3. enable CORS in a specific controller
 4. fetch data from react
 5. test connection by running backend and running frontend
+
+
+
+
+react query is better than useEffect/useState approach because:
+1. automatic caching
+    - REACT QUERY: caches fetched data by queryKey. if you visit the same listing again, it shows cached data instantly and updates in the background
+    - OLD APPROACH: always fetches from the server, even if you already have the data
+
+2. build-in loading and & error states
+    - REACT QUERY: provides isLoading and error out of the box, making your UI logic simple and reliable.
+    OLD APPROACH: you have to manually manage loading and error states with extra state variables and logic
+
+3. background refetching
+    - REACT QUERY: can automatically refetch data when the window regains focus or after a certain time, keeping your UI up-to-date.
+    - OLD APPROACH: you'd have to write extra code to handle background updates.
+
+4. less boilerplate
+    - REACT QUERY: handles all the fetching, caching, updating, and error handling for you.
+    - OLD APPROACH: you write more code for fetching, error handling, and updating state.
+
+5. devtools & ecosystem
+    - REACT QUERY: comes with devtools for inspecting queries.
+    - OLD APPROACH: no built-in devtools for fetches or cache.
+
+6. declarative and readable
+    - REACT QUERY: your data fetching logic is more declarative and easier to read.
+    - OLD APPROACH: more imperative code, harder to maintain as your app grows.
