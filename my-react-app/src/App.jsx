@@ -6,6 +6,7 @@ import Error from "./pages/Error/Error.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Listings from "./pages/Listings/Listings.jsx";
 import MyListings from "./pages/MyListings/MyListings.jsx";
+import ViewListing from "./pages/ViewListing/ViewListing.jsx";
 
 function App() {
   
@@ -26,6 +27,8 @@ function App() {
 
           {/* Listings Page */}
           <Route path="/listings" element={<Listings />} />
+
+          <Route path="/listings/:listingId" element={<ViewListing/>} />
 
           {/* My Listings Page */}
           <Route path="/mylistings" element={<MyListings />} />

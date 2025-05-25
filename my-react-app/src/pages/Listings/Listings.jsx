@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Navbar from "../../components/Navbar/NavBar";
 
@@ -9,6 +10,7 @@ import sideeyedog from "../../assets/sideeyedog.png";
 const API_URL = "http://localhost:8080/api/products"
 
 export default function Listings() {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -31,6 +33,10 @@ export default function Listings() {
         fetchProducts();
     }, [])
 
+    function handleViewListingButton(e, productId) {
+        navigate(`/listings/${productId}`);
+    }
+
     return (
         <>
             <Navbar/>
@@ -48,7 +54,7 @@ export default function Listings() {
                             <img className={styles.ListingImage} src={sideeyedog} />
                             <p className={styles.ListingName}>{product.name}</p>
                             <p className={styles.ListingPrice}>${product.price}</p>
-                            <button className={styles.ListingButton}>View Listing</button>
+                            <button onClick={(e) => handleViewListingButton(e, product.id)} className={styles.ListingButton}>View Listing</button>
                         </div>
                     )) : <div className={styles.Loading}>Loading...</div>}
                 </div>
