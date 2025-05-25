@@ -13,25 +13,37 @@
 .modalContent{
     position: absolute;
     top: 10vh;
-    width: 10vw;
-    height: 15vh;
+    width: 22vw;
+    min-width: 250px;
+    max-width: 60vw;
+    min-height: 220px;
+    max-height: 50vh;
+    height: 28vh;
     max-width: 60vw;
     background-color: white;       /* solid white box */
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
     z-index: 1000;
     border: 2px solid black;        /* optional visible outline */
     border-radius: 8px;
 
     display: grid;
+    grid-template-rows: 1fr 0.8fr 0.8fr;
+    gap: 0.5rem;
+    overflow: hidden;
 
 }
 .modalHeader{
-   font-family: Arial, Helvetica, sans-serif; 
-   text-align: center;
-   /* means the font size will scale with the viewport but never be smaller than 1rem or larger than 1.5rem */
-   font-size: clamp(1rem, 2vw, 1.5rem);
-    word-break: break-word; /* Prevents overflow */
+    font-family: Arial, Helvetica, sans-serif; 
+    text-align: center;
+    font-size: 1.2em;
+    word-break: break-word;
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: 0; */
+    grid-row: 1 / 2;
 }
 .deleteButton{
     border-radius: 5px;
@@ -40,6 +52,8 @@
     margin-right: auto;
     cursor: pointer;
     background-color: tomato;
+
+    grid-row: 2 / 3;
 }
 .closeButton{
     border-radius: 5px;
@@ -48,4 +62,6 @@
     margin-right: auto;
     cursor: pointer;
     margin-top: 0.25rem;
+
+    grid-row: 3 / 4;
 }

@@ -26,7 +26,7 @@ export default function ViewListing() {
             }
         }
         getListingInformation();
-    }, [])
+    }, [listingId])
 
     function handleAddToCartButton() {
         console.log("added to cart")
