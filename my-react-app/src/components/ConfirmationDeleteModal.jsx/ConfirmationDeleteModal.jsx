@@ -1,25 +1,35 @@
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import styles from "./ConfirmationDeleteModal.module.css";
 
-export default function ConfirmationDeleteModal({onClose, currentProductId}) {
+export default function ConfirmationDeleteModal({ onClose, currentProductId }) {
+    const queryClient = useQueryClient();
 
     async function DeleteListing() {
-        try {
-            const response = await fetch(`http://localhost:8080/api/products/${currentProductId}`, {
-                method: "DELETE"
-            });
-            if (!response.ok) {
-                const message = await response.text();
-                console.log(message);
-            }
-        } catch (error) {
-            console.error(error)
+        const response = await fetch(`http://localhost:8080/api/products/${currentProductId}`, {
+            method: "DELETE"
+        });
+        if (!response.ok) {
+            const message = await response.text();
+            throw new Error(message);
         }
     }
 
+    const deleteMutation = useMutation({
+        mutationFn: DeleteListing,
+        onSuccess: () => {
+            // invalidate or refetch listings so UI updates
+            queryClient.invalidateQueries(["fetchUserListings"]);
+            onClose();
+        },
+        onError: (error) => {
+            console.error(error);
+        }
+    })
+
     function handleDeleteButton() {
-        DeleteListing();
-        onClose();
+        deleteMutation.mutateAsync();
     }
 
     return (
