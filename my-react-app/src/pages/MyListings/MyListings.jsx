@@ -1,4 +1,5 @@
 
+import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 
 import Navbar from "../../components/Navbar/NavBar";
@@ -9,43 +10,44 @@ import styles from "./MyListings.module.css";
 import sideeyedog from "../../assets/sideeyedog.png";
 
 
+async function fetchUserListings() {
+    const response = await fetch(`http://localhost:8080/api/products/users/${loggedInUser.id}`);
+    if (!response.ok) {
+        throw new Error("Failed to fetch user listings!");
+    }
+    return response.json();
+}
+
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
 export default function UserListings() {
     
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [currentProductId, setCurrentProductId] = useState(null);
 
     const [showCreateListingModal, setShowCreateListingModal] = useState(false);
     const [showConfirmationDeleteModal, setShowConfirmationDeleteModal] = useState(false);
 
     
+    let userListingsExist = false;
 
-    let noProducts = false;
-    if (products.length == 0) {
-        noProducts = true;
+    const { data: listings, isLoading, error } = useQuery({
+        queryKey: ["fetchUserListings"],
+        queryFn: fetchUserListings,
+        enabled: !!loggedInUser && !!loggedInUser.id,
+    });
+    
+    if (isLoading) {
+        return <div>Loading...</div>
     }
-
-    useEffect(() => {
-        const fetchUserProducts = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/api/products/users/${loggedInUser.id}`);
-                if (!response.ok) {
-                    throw new Error("failed to fetch products");
-                }
-                const myProducts = await response.json();
-                setProducts(myProducts);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUserProducts();
-    })
+    if (error) {
+        return <div>Error loading listing.</div>
+    }
+    if (!listings) {
+        return <p>Data not loaded...</p>
+    }
+    if (listings.length != 0) {
+        userListingsExist = true;
+    }
 
     function handleCreateListingButton() {
         setShowCreateListingModal(true);
@@ -68,30 +70,29 @@ export default function UserListings() {
                 </div>
 
                 <div className={styles.listingsGrid}>
-                    {
-                        !loading && !error ? products.map((product) => (
-                        <div key={product.id} className={styles.listing}>
+                    {listings.map((listing) => (
+                        <div key={listing.id} className={styles.listing}>
                             <div className={styles.listingImageContainer}>
                                 <img className={styles.listingImage} src={sideeyedog} />
                             </div>
 
                             <div className={styles.listingInformationContainer}>
-                                <p className={styles.listingName}>{product.name}</p>
-                                <p className={styles.listingPrice}>${product.price}</p>
+                                <p className={styles.listingName}>{listing.name}</p>
+                                <p className={styles.listingPrice}>${listing.price}</p>
                             </div>
 
                             <div className={styles.listingButtonsContainer}>
                                 <button>Edit Listing</button>
-                                {/* <button onClick={handleDeleteListingButton}>Delete Listing</button> */}
-                                <button onClick={(e) => handleDeleteListingButton(e, product.id)}>Delete Listing</button>
+                                <button onClick={(e) => handleDeleteListingButton(e, listing.id)}>Delete Listing</button>
                             </div>
 
                         </div>
-                        )) : <div className={styles.Loading}>Loading...</div>
-                    }
+                    ))}
+
                     {
-                        !noProducts ? "" : <div className={styles.noCurrentListings}>You have no current listings</div>
+                        userListingsExist ? "" : <div className={styles.noCurrentListings}>You have no current listings</div>
                     }
+
                 </div>
             </div>
 
