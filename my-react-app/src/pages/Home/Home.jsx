@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./Home.module.css";
@@ -8,67 +8,68 @@ import sideeyedog from "../../assets/sideeyedog.png";
 
 const API_URL = "http://localhost:8080/api/products"
 
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+console.log(loggedInUser);
+
+async function fetchListings() {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+        const message = await response.text();
+        console.log(message);
+    }
+    return response.json();
+}
+
 export default function Home() {
     const navigate = useNavigate();
 
-    const [products, setProducts] = useState([]); // state to store products
-    const [loading, setLoading] = useState(true); // state to handle loading state
-    const [error, setError] = useState(null); // for error handling
+    const { data: listings, isLoading, error } = useQuery({
+        queryKey: ["allListings"],
+        queryFn: fetchListings,
+        enabled: !!loggedInUser && !!loggedInUser.id
+    })
 
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    console.log(loggedInUser);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) {
-                    throw new Error("failed to fetch products");
-                }
-                const data = await response.json();
-                setProducts(data);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+    if (error) {
+        return <div>Error loading listing.</div>
+    }
+    if (!listings) {
+        return <p>Data not loaded...</p>
+    }
 
-        fetchProducts(); // call the async function to fetch data
 
-    }, [])
-
-    if (error) console.log(error);
-
-    function handleViewListingButton(e, productId) {
-        navigate(`/listings/${productId}`);
+    function handleViewListingButton(e, listingId) {
+        navigate(`/listings/${listingId}`);
     }
 
     return (
         <>
             <div className={styles.wrapper}>
-                <Navbar/>
+                <Navbar />
+                
                 <div className={styles.MessageContainer}>
                     <p className={styles.Message}>
                         Welcome back, {loggedInUser.username}!
                     </p>
                 </div>
-                {/* load in from the api each of the products */}
+
                 <div className={styles.ListingsGridContainer}>
                     <div className={styles.ListingsGrid}>
 
-                        {loading == false && !error ? products.slice(0, 6).map((product) => (
-                            <div key={product.id} className={styles.Listing}>
+                        {listings.slice(0,6).map((listing) => (
+                            <div key={listing.id} className={styles.Listing}>
                                 <img className={styles.ListingImage} src={sideeyedog} />
-                                <p className={styles.ListingName}>{product.name}</p>
-                                <p className={styles.ListingPrice}>${product.price}</p>
-                                <button onClick={(e) => handleViewListingButton(e, product.id)} className={styles.ListingButton}>View Listing</button>
+                                <p className={styles.ListingName}>{listing.name}</p>
+                                <p className={styles.ListingPrice}>${listing.price}</p>
+                                <button onClick={(e) => handleViewListingButton(e, listing.id)} className={styles.ListingButton}>View Listing</button>
                             </div>
-                        )) : <div className={styles.Loading}>Loading...</div>}
-
-
+                        ))}
                     </div>
                 </div>
+
             </div>
         </>
     )
