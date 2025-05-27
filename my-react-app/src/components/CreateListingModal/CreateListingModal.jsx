@@ -1,36 +1,43 @@
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { useRef } from "react";
 import styles from "./CreateListingModal.Module.css";
 
 
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-console.log(loggedInUser.id + "IS THE USER ID")
+// console.log(loggedInUser.id + "IS THE USER ID")
+
+async function createListing(data) {
+    const response = await fetch("http://localhost:8080/api/products", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message);
+    }
+}
 
 export default function CreateListingModal({ onClose }) {
+    const queryClient = useQueryClient();
+
     const nameRef = useRef();
     const descriptionRef = useRef();
     const priceRef = useRef();
-    
-    async function createListing(data) {
-        console.log("Sending data: ", data);
-        try {
-            const response = await fetch("http://localhost:8080/api/products", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-            if (response.ok) {
-                console.log("success");
-            } else {
-                const message = await response.text();
-                console.log(message);
-            }
-        } catch (error) {
-            // Optionally handle error here
+
+    const postMutation = useMutation({
+        mutationFn: createListing,
+        onSuccess: () => {
+            queryClient.invalidateQueries(["fetchUserListings"]);
+        },
+        onError: (error) => {
+            console.log(error)
         }
-    }
+    })
 
     function handleFormSubmit(event) {
         event.preventDefault();
@@ -45,8 +52,8 @@ export default function CreateListingModal({ onClose }) {
             }
         };
 
-        createListing(data);
-        console.log(data)
+        postMutation.mutateAsync(data);
+        
         onClose();
     }
 
