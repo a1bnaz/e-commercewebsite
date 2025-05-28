@@ -1,3 +1,6 @@
+
+import { useQuery } from "@tanstack/react-query";
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,29 +12,34 @@ import sideeyedog from "../../assets/sideeyedog.png";
 
 const API_URL = "http://localhost:8080/api/products"
 
+async function fetchListings() {
+    const response = await fetch(API_URL);
+    if (!response.ok) {
+        const message = await response.text();
+        console.log(message);
+    }
+    return response.json();
+}
+
 export default function Listings() {
+
     const navigate = useNavigate();
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) {
-                    throw new Error("failed to fetch products");
-                }
-                const data = await response.json();
-                setProducts(data);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const { data: listings, isLoading, error } = useQuery({
+        queryKey: ["allListings"],
+        queryFn: fetchListings,
+        enabled: true
+    });
 
-        fetchProducts();
-    }, [])
+    if (isLoading) {
+        return <div className={styles.Loading}>Loading...</div>
+    }
+    if (error) {
+        return <div>Error loading listing.</div>
+    }
+    if (!listings) {
+        return <p>Data not loaded...</p>
+    }
 
     function handleViewListingButton(e, productId) {
         navigate(`/listings/${productId}`);
@@ -49,14 +57,14 @@ export default function Listings() {
 
                 {/* Listings Grid (on the right of the screen) */}
                 <div className={styles.ListingsGrid}>
-                    {!loading ? products.slice(0, 20).map((product) => (
-                        <div key={product.id}  className={styles.Listing}>
+                    {listings.slice(0, 20).map((listing) => (
+                        <div key={listing.id} className={styles.Listing}>
                             <img className={styles.ListingImage} src={sideeyedog} />
-                            <p className={styles.ListingName}>{product.name}</p>
-                            <p className={styles.ListingPrice}>${product.price}</p>
-                            <button onClick={(e) => handleViewListingButton(e, product.id)} className={styles.ListingButton}>View Listing</button>
+                            <p className={styles.ListingName}>{listing.name}</p>
+                            <p className={styles.ListingPrice}>${listing.price}</p>
+                            <button onClick={(e) => handleViewListingButton(e, listing.id)} className={styles.ListingButton}>View Listing</button>
                         </div>
-                    )) : <div className={styles.Loading}>Loading...</div>}
+                    ))}
                 </div>
 
             </div>
