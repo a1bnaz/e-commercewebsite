@@ -11,6 +11,7 @@
 
 **6/04/25**
 >i stopped using css modules entirely and incorporated tailwind into my project just because it's faster to style and less of a headache to come up with class names. it took a little bit of work but because i already had vanilla css knowledge, it wasn't too difficult to switch to tailwind. i also incorporated react query (tanstack) to manage my ui and its state, because i learned it's better to use than the classic useState + useEffect. I actually enjoy this approach more because it's simple, and it comes with a lot of states to handle (e.g. isLoading, error, etc...), there are actually so many different options but these are the only ones i use tbh. at this point, the only features that i still need to implement are as follows:
+
     - user authentication (will most likely use 0Auth or JWT ... prob JWT because it's in the spring family)
     - a working create an account page (w/ validation)
     - a my profile page
@@ -20,4 +21,4 @@
          - having a slide show of images for a listing, and allowing a user to have multiple images for their listing... not just one.
     - a modal that acts as validation and appears when a user's action isn't valid. For example: the listing name has too many characters, the description listing has too many characters, image file types aren't permitted, etc... (will be a reuseable component).
 
-for now i'm planning to host my project just to see it thrown out there. it should't take too long to learn. i've already planned on hosting the backend with render/railway and the frontend with vercel, so it should be easy to learn hopefully. like i said in my last update, i still have no idea what i'm doing but hopefully this all works out. i'm planning to complete this project. lowkey the ui rn looks like dogshi but its probably ok. i also learned that i should be writing documentation and testing for my code, but lowkey that's a lot of work so i'll just stick with my minimal documentation.
+>for now i'm planning to host my project just to see it thrown out there. it should't take too long to learn. i've already planned on hosting the backend with render/railway and the frontend with vercel, so it should be easy to learn hopefully. like i said in my last update, i still have no idea what i'm doing but hopefully this all works out. i'm planning to complete this project. lowkey the ui rn looks like dogshi but its probably ok. i also learned that i should be writing documentation and testing for my code, but lowkey that's a lot of work so i'll just stick with my minimal documentation.
