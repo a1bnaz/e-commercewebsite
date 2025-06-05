@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const API_URL = "http://localhost:8080/api/users/login";
+// const API_URL = import.meta.env.VITE_API_URL|| "http://localhost:8080/api/users/login";
+const API_URL = import.meta.env.VITE_API_URL;
 
 
 async function loginUser({ email, password }) {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${API_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

@@ -2,10 +2,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function ConfirmationDeleteModal({ onClose, currentListingId }) {
     const queryClient = useQueryClient();
     async function DeleteListing() {
-        const response = await fetch(`http://localhost:8080/api/products/${currentListingId}`, {
+        const response = await fetch(`${API_URL}/products/${currentListingId}`, {
             method: "DELETE"
         });
         if (!response.ok) {

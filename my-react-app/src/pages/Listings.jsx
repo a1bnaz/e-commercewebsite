@@ -7,10 +7,11 @@ import Navbar from "../components/Navbar.jsx";
 
 import sideeyedog from "../assets/sideeyedog.png";
 
-const API_URL = "http://localhost:8080/api/products"
+// const API_URL = "http://localhost:8080/api/products"
+const API_URL = import.meta.env.VITE_API_URL;
 
 async function fetchListings() {
-    const response = await fetch(API_URL);
+    const response = await fetch(`${API_URL}/products`);
     if (!response.ok) {
         const message = await response.text();
         console.log(message);
