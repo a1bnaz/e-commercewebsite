@@ -8,8 +8,9 @@ This is used to update the current listing.
 When the edit listing button is clicked, it's processed through the putMutation and the PUT method is used to update the listing.
 */
 async function updateListing({data, currentListingId}) {
-    const API_URL = `http://localhost:8080/api/products/${currentListingId}`;
-    const response = await fetch(API_URL, {
+    // const API_URL = `http://localhost:8080/api/products/${currentListingId}`;
+    const API_URL = import.meta.env.VITE_API_URL;
+    const response = await fetch(`${API_URL}/products/${currentListing}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

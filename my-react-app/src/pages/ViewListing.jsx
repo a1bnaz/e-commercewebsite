@@ -8,9 +8,10 @@ import sideeyedog from "../assets/sideeyedog.png";
 
 
 async function getListingInformation(listingId) {
-    const API_URL = `http://localhost:8080/api/products/${listingId}`;
+    const API_URL = import.meta.env.VITE_API_URL;
+    // const API_URL = `http://localhost:8080/api/products/${listingId}`;
     
-    const response = await fetch(API_URL);
+    const response = await fetch(`${API_URL}/products/${listingId}`);
     if (!response.ok) {
         throw new Error("Failed to fetch listing!");
     }

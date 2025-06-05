@@ -3,9 +3,10 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 
 import { useRef } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 async function createListing(data) {
-    const response = await fetch("http://localhost:8080/api/products", {
+    const response = await fetch(`${API_URL}/products`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
