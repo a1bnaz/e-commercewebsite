@@ -12,8 +12,7 @@ import sideeyedog from "../assets/sideeyedog.png";
 
 async function fetchUserListings(loggedInUserId) {
     const API_URL = `http://localhost:8080/api/products/users/${loggedInUserId}`
-    const TEMP_API_URL = `http://192.168.87.205:8080/api/products/users/${loggedInUserId}`
-    const response = await fetch(TEMP_API_URL);
+    const response = await fetch(API_URL);
     if (!response.ok) {
         throw new Error("Failed to fetch user listings!");
     }

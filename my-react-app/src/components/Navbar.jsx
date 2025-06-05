@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import sideeyedog from "../assets/sideeyedog.png";
 
-// import ProfileModal from "./ProfileModal/ProfileModal.jsx";
-
 import HamburgerDropdown from "./HamburgerDropdown.jsx";
 
 export default function Navbar() {

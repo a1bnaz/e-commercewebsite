@@ -9,9 +9,8 @@ import sideeyedog from "../assets/sideeyedog.png";
 
 async function getListingInformation(listingId) {
     const API_URL = `http://localhost:8080/api/products/${listingId}`;
-    const TEMP_API_URL = `http://192.168.87.205:8080/api/products/${listingId}`;
     
-    const response = await fetch(TEMP_API_URL);
+    const response = await fetch(API_URL);
     if (!response.ok) {
         throw new Error("Failed to fetch listing!");
     }

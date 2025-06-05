@@ -9,8 +9,7 @@ When the edit listing button is clicked, it's processed through the putMutation 
 */
 async function updateListing({data, currentListingId}) {
     const API_URL = `http://localhost:8080/api/products/${currentListingId}`;
-    const TEMP_API_URL = `http://192.168.87.205:8080/api/products/${currentListingId}`
-    const response = await fetch(TEMP_API_URL, {
+    const response = await fetch(API_URL, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -29,9 +28,8 @@ This function is intended to get the current listing information to already have
 */
 async function getListingInformation(listingId) {
     const API_URL = `http://localhost:8080/api/products/${listingId}`;
-    const TEMP_API_URL = `http://192.168.87.205:8080/api/products/${listingId}`;
 
-    const response = await fetch(TEMP_API_URL);
+    const response = await fetch(API_URL);
     if (!response.ok) {
         throw new Error("Failed to fetch listing!");
     }

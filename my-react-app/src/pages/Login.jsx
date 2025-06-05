@@ -4,11 +4,10 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const API_URL = "http://localhost:8080/api/users/login";
-const TEMP_API_URL = "http://192.168.87.205:8080/api/users/login";
 
 
 async function loginUser({ email, password }) {
-    const response = await fetch(TEMP_API_URL, {
+    const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

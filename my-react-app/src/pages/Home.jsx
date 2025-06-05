@@ -6,11 +6,10 @@ import Navbar from "../components/Navbar.jsx";
 import sideeyedog from "../assets/sideeyedog.png";
 
 const API_URL = "http://localhost:8080/api/products"
-const TEMP_API_URL = "http://192.168.87.205:8080/api/products"
 
 
 async function fetchListings() {
-    const response = await fetch(TEMP_API_URL);
+    const response = await fetch(API_URL);
     if (!response.ok) {
         const message = await response.text();
         console.log(message);
