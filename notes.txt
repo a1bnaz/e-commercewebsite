@@ -44,3 +44,202 @@ steps to getting the backend and the frontend to talk to each other:
 3. enable CORS in a specific controller
 4. fetch data from react
 5. test connection by running backend and running frontend
+
+
+
+
+react query is better than useEffect/useState approach because:
+1. automatic caching
+    - REACT QUERY: caches fetched data by queryKey. if you visit the same listing again, it shows cached data instantly and updates in the background
+    - OLD APPROACH: always fetches from the server, even if you already have the data
+
+2. build-in loading and & error states
+    - REACT QUERY: provides isLoading and error out of the box, making your UI logic simple and reliable.
+    OLD APPROACH: you have to manually manage loading and error states with extra state variables and logic
+
+3. background refetching
+    - REACT QUERY: can automatically refetch data when the window regains focus or after a certain time, keeping your UI up-to-date.
+    - OLD APPROACH: you'd have to write extra code to handle background updates.
+
+4. less boilerplate
+    - REACT QUERY: handles all the fetching, caching, updating, and error handling for you.
+    - OLD APPROACH: you write more code for fetching, error handling, and updating state.
+
+5. devtools & ecosystem
+    - REACT QUERY: comes with devtools for inspecting queries.
+    - OLD APPROACH: no built-in devtools for fetches or cache.
+
+6. declarative and readable
+    - REACT QUERY: your data fetching logic is more declarative and easier to read.
+    - OLD APPROACH: more imperative code, harder to maintain as your app grows.
+
+
+* the use of responsive design*
+1. UNITS MATTER: USE RESPONSIVE UNITS
+
+- unit -> %, description: percentage of parent container, use it for: widths and margins
+
+- unit -> vw/vh, description: viewport width/height, use it for: sizing elements relative to the screen
+
+- unit -> em/rem, description: relative to font size (em: parent, rem: root), use it for: padding, font size, spacing
+
+- unit -> fr, description: fraction of available space (in grid), use it for: grid layouts
+
+2. FLEXBOX AND GRID: LAYOUT BACKBONES
+-> use flexbox for:
+    ~ aligning items in a row/column
+    ~ navigation bars
+    ~ small groups of content
+
+-> use grid for:
+    ~ complex laouts (e.g. cards, dashboards)
+    ~ precise control over spacing and alignment
+
+3. MEDIA QUERIES: THE BREAKPOINTS OF RESPONSIVENESS
+
+basic syntax:
+@media (max-width: 760px) {
+    .NavBar{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+Common Breakpoints:
+phones | <480px
+tablets | 481-768px
+small laptops | 769-1024px
+desktops | > 1024px
+
+4. MOBILE-FIRST vs DESKTOP-FIRST DESIGN
+- Mobile-first approach (recommended). the benefit is this forces you to prioritize content and performance for the majority of users (many are on mobile!).
+    ~ write CSS for small screens first
+    ~ add media queries to handle larger sizes
+    example:
+        .Buttons{
+            width: 100%;
+            justify-content: center;
+        }
+        @media (min-width: 768px){
+            .Buttons{
+                width: 12%;
+                justify-content: flex-end;
+            }
+        }
+
+5. STRUCTURAL TIPS FOR BUILDING RESPNOSIVE layouts
+    ~ 1. use max-widths, not fixed widths:
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+    
+    ~ 2. stack content vertically on small screens
+        @media (max-width: 768px){
+            .NavBar{
+                flex-direction: column;
+            }
+        }
+    
+    ~ 3. use percentage-based widths of minmax() for flexible containers
+
+    ~ 4. avoid hardcoded height unless necessary- let the content determine it
+
+FINAL TIPS AND MENTAL MODELS:
+~ Focus on content priority:
+    what's most important to show on mobile? what can be hidden, stacked, or minimized?
+
+~ constantly test:
+    open your devtools and resize constantly while developing. Emulate devices too.
+
+
+USEFUL CSS FUNCTIONS FOR RESPONSIVE LAYOUTS:
+1. clamp(min, preferred, max)
+    ~ purpose: creates fluid values (like font sizes or widths) that scale between a minimum and maximum, depending on the screen size.
+
+    ~ how it works:
+        - min: the smallest the value should be
+        - preferred: typically a combination using vw
+        - max: the largest the value should be
+
+    ~ use cases:
+        - fluid font sizes, padding, margins, or element width/height
+
+    ~ example:
+        h1 {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+        }
+        ^ this means: "use 1.5rem at minimum, let it scale up to 3rem based on viewport width"
+
+2. min(a,b) and max(a,b)
+    ~ purpose: choose the smaller (min) or larger (max) value between two operations
+
+    ~ use cases:
+        - prevent values from becoming too small or larger
+        - flexible button sizing or spacing
+
+    ~ first example:
+        .card {
+            width: min(100%, 600px);
+        }
+        ^ this ensures .card is never wider than 600px but fills the container on smaller screens.
+
+    ~ second example:
+        .button {
+            padding: max(1rem, 2%);
+        }
+        ^ use 2% padding unless it becomes smaller than 1rem.
+
+3. minmax(min, max) - for CSS GRID
+    ~ purpose: sets a flexible size for grid tracks - lets them shrink and grow between two bounds
+
+    ~ use cases:
+        - responsive grids
+        - auto-adjusting columns with a minimum width
+
+    ~ example:
+        .grid {
+            display: grid;
+            grid-template-columns: repreat(auto-fit, minmax(250px, 1fr));
+        }
+        ^ this creates a grid that:
+            - fills the row with as many columns as possible (auto-fit).
+            - each column is at least 250px, but grows to take available space (1fr).
+
+4. calc() - MATHEMATICAL EXPRESSIONS IN CSS
+    ~ purpose: do math operations with CSS values.
+
+    ~ use cases:
+        - dynamic layouts or spacing
+        - adjust size relative to other properties
+
+    ~ first example:
+        .sidebar {
+            width: calc(100% - 300px);
+        }
+        ^ great when you have a 300px sidebar and want the content to fill the rest.
+
+    ~ second example:
+        .container {
+            padding: calc(1rem + 2vw);
+        }
+        ^ combines fixed and flexible padding!
+
+SUMMARY TABLE:
+function | use for | sample use | what it does 
+clamp() | fluid scaling | clamp(1rem, 4vw, 2rem) | scales between a min and max
+
+min() | size caps | min(100%, 500px) | picks the smaller value
+
+max() | enforcing limits | max(10px, 2vw) | picks the larger value
+
+minmax() | grid layout | minmax(250px, 1fr) | sets min/max size in grid
+
+calc() | dynamic math | calc(100%, -300px) | combines units or variables
+
+TIPS WHEN USING THESE:
+    - use clamp() instead of media queries for fluid text sizes.
+    - combine min() and max() for safe responsive limits.
+    - use minmax() + auto-fit or auto-fill for fluid grids.
+    - use calc() when layout relationships involve math (e.g. nav width vs content width.)

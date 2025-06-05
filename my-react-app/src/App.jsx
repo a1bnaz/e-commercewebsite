@@ -1,40 +1,45 @@
-import './App.css';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Home/Home.jsx";
-import Error from "./pages/Error/Error.jsx";
-import Login from "./pages/Login/Login.jsx";
-import Listings from "./pages/Listings/Listings.jsx";
-import MyListings from "./pages/MyListings/MyListings.jsx";
+import Home from "./pages/Home.jsx";
+import Error from "./pages/Error.jsx";
+import Login from "./pages/Login.jsx";
+import Listings from "./pages/Listings.jsx";
+import MyListings from "./pages/MyListings.jsx";
+import ViewListing from "./pages/ViewListing.jsx";
 
 function App() {
-  
+  const queryClient = new QueryClient();
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          
-          {/* Landing Page/First Page */}
-          <Route path="/" element={<Login />} />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
 
-          {/* Login Page */}
-          <Route path="/login" element={<Login />} />
+            {/* Landing Page/First Page */}
+            <Route path="/" element={<Login />} />
 
-          {/* Home Page */}
-          <Route path="/home" element={<Home />} />
+            {/* Login Page */}
+            <Route path="/login" element={<Login />} />
 
-          {/* Listings Page */}
-          <Route path="/listings" element={<Listings />} />
+            {/* Home Page */}
+            <Route path="/home" element={<Home />} />
 
-          {/* My Listings Page */}
-          <Route path="/mylistings" element={<MyListings />} />
-          
-          {/* Error Page */}
-          <Route path="*" element={<Error />} /> 
+            {/* Listings Page */}
+            <Route path="/listings" element={<Listings />} />
 
-        </Routes>
-      </BrowserRouter>
+            <Route path="/listings/:listingId" element={<ViewListing />} />
+
+            {/* My Listings Page */}
+            <Route path="/mylistings" element={<MyListings />} />
+
+            {/* Error Page */}
+            <Route path="*" element={<Error />} />
+
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
     </>
   )
 }
