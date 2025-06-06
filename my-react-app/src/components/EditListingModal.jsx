@@ -8,9 +8,9 @@ This is used to update the current listing.
 When the edit listing button is clicked, it's processed through the putMutation and the PUT method is used to update the listing.
 */
 async function updateListing({data, currentListingId}) {
-    // const API_URL = `http://localhost:8080/api/products/${currentListingId}`;
+    // const API_URL = `http://localhost:8080/api/listings/${currentListingId}`;
     const API_URL = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${API_URL}/products/${currentListing}`, {
+    const response = await fetch(`${API_URL}/listings/${currentListing}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -28,7 +28,7 @@ This is used to get the current listing information.
 This function is intended to get the current listing information to already have the input boxes filled out, making it easier to edit.
 */
 async function getListingInformation(listingId) {
-    const API_URL = `http://localhost:8080/api/products/${listingId}`;
+    const API_URL = `http://localhost:8080/api/listings/${listingId}`;
 
     const response = await fetch(API_URL);
     if (!response.ok) {

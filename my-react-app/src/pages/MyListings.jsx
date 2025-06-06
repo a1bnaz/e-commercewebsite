@@ -14,7 +14,7 @@ import sideeyedog from "../assets/sideeyedog.png";
 async function fetchUserListings(loggedInUserId) {
     const API_URL = import.meta.env.VITE_API_URL;
     // const API_URL = `http://localhost:8080/api/products/users/${loggedInUserId}`
-    const response = await fetch(`${API_URL}/products/users/${loggedInUserId}`);
+    const response = await fetch(`${API_URL}/listings/users/${loggedInUserId}`);
     if (!response.ok) {
         throw new Error("Failed to fetch user listings!");
     }

@@ -6,7 +6,7 @@ import { useRef } from "react";
 const API_URL = import.meta.env.VITE_API_URL;
 
 async function createListing(data) {
-    const response = await fetch(`${API_URL}/products`, {
+    const response = await fetch(`${API_URL}/listings`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
