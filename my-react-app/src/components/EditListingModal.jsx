@@ -10,7 +10,7 @@ When the edit listing button is clicked, it's processed through the putMutation 
 async function updateListing({data, currentListingId}) {
     // const API_URL = `http://localhost:8080/api/listings/${currentListingId}`;
     const API_URL = import.meta.env.VITE_API_URL;
-    const response = await fetch(`${API_URL}/listings/${currentListing}`, {
+    const response = await fetch(`${API_URL}/listings/${currentListingId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
