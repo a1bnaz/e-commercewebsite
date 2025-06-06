@@ -11,7 +11,7 @@ import sideeyedog from "../assets/sideeyedog.png";
 const API_URL = import.meta.env.VITE_API_URL;
 
 async function fetchListings() {
-    const response = await fetch(`${API_URL}/products`);
+    const response = await fetch(`${API_URL}/listings`);
     if (!response.ok) {
         const message = await response.text();
         console.log(message);

@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function ConfirmationDeleteModal({ onClose, currentListingId }) {
     const queryClient = useQueryClient();
     async function DeleteListing() {
-        const response = await fetch(`${API_URL}/products/${currentListingId}`, {
+        const response = await fetch(`${API_URL}/listings/${currentListingId}`, {
             method: "DELETE"
         });
         if (!response.ok) {

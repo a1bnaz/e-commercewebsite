@@ -11,7 +11,7 @@ async function getListingInformation(listingId) {
     const API_URL = import.meta.env.VITE_API_URL;
     // const API_URL = `http://localhost:8080/api/products/${listingId}`;
     
-    const response = await fetch(`${API_URL}/products/${listingId}`);
+    const response = await fetch(`${API_URL}/listings/${listingId}`);
     if (!response.ok) {
         throw new Error("Failed to fetch listing!");
     }
