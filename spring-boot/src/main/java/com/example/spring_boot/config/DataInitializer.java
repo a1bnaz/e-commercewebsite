@@ -1,6 +1,6 @@
 package com.example.spring_boot.config;
 
-import com.example.spring_boot.model.Product;
+import com.example.spring_boot.model.Listing;
 
 // this class is used to load in temporary sample data!!!
 
