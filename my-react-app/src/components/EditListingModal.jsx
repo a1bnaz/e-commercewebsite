@@ -7,7 +7,7 @@ import { useRef, useState, useEffect } from "react";
 This is used to update the current listing.
 When the edit listing button is clicked, it's processed through the putMutation and the PUT method is used to update the listing.
 */
-async function updateListing({data, currentListingId}) {
+async function updateListing({ data, currentListingId }) {
     // const API_URL = `http://localhost:8080/api/listings/${currentListingId}`;
     const API_URL = import.meta.env.VITE_API_URL;
     const response = await fetch(`${API_URL}/listings/${currentListingId}`, {
@@ -28,9 +28,10 @@ This is used to get the current listing information.
 This function is intended to get the current listing information to already have the input boxes filled out, making it easier to edit.
 */
 async function getListingInformation(listingId) {
-    const API_URL = `http://localhost:8080/api/listings/${listingId}`;
+    // const API_URL = `http://localhost:8080/api/listings/${listingId}`;
+    const API_URL = import.meta.env.VITE_API_URL;
 
-    const response = await fetch(API_URL);
+    const response = await fetch(`${API_URL}/listings/${listingId}`);
     if (!response.ok) {
         throw new Error("Failed to fetch listing!");
     }
@@ -105,7 +106,7 @@ export default function EditListingModal({ onClose, currentListingId }) {
             }
         };
 
-        putMutation.mutateAsync({data, currentListingId});
+        putMutation.mutateAsync({ data, currentListingId });
 
         onClose();
     }
@@ -133,81 +134,81 @@ export default function EditListingModal({ onClose, currentListingId }) {
                     <div>Loading...</div>
                 ) : error ? (
                     <div>Error loading listing.</div>
-                    ) : (
-                            <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
-                                {/* TITLE FIELD */}
-                                <div>
-                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                                        Title
-                                    </label>
-                                    <input
-                                        ref={nameRef}
-                                        type="text"
-                                        id="title"
-                                        name="title"
-                                        required
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-                                    />
-                                </div>
+                ) : (
+                    <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
+                        {/* TITLE FIELD */}
+                        <div>
+                            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                                Title
+                            </label>
+                            <input
+                                ref={nameRef}
+                                type="text"
+                                id="title"
+                                name="title"
+                                required
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+                            />
+                        </div>
 
-                                {/* DESCRIPTION FIELD */}
-                                <div>
-                                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                                        Description
-                                    </label>
-                                    <textarea
-                                        ref={descriptionRef}
-                                        id="description"
-                                        name="description"
-                                        required
-                                        value={description}
-                                        onChange={(e) => setDescription(e.target.value)}
-                                        rows="4"
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2 resize-none"
-                                    />
-                                </div>
+                        {/* DESCRIPTION FIELD */}
+                        <div>
+                            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                                Description
+                            </label>
+                            <textarea
+                                ref={descriptionRef}
+                                id="description"
+                                name="description"
+                                required
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                rows="4"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2 resize-none"
+                            />
+                        </div>
 
-                                {/* PRICE FIELD (Stacked) */}
-                                <div>
-                                    <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                                        Price
-                                    </label>
-                                    <input
-                                        ref={priceRef}
-                                        type="number"
-                                        id="price"
-                                        name="price"
-                                        required
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        className="mt-1 block w-32 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
-                                        onInput={e => {
-                                            if (e.target.value.length > 7) {
-                                                e.target.value = e.target.value.slice(0, 7);
-                                            }
-                                        }}
-                                    />
-                                </div>
+                        {/* PRICE FIELD (Stacked) */}
+                        <div>
+                            <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                                Price
+                            </label>
+                            <input
+                                ref={priceRef}
+                                type="number"
+                                id="price"
+                                name="price"
+                                required
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                                className="mt-1 block w-32 rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+                                onInput={e => {
+                                    if (e.target.value.length > 7) {
+                                        e.target.value = e.target.value.slice(0, 7);
+                                    }
+                                }}
+                            />
+                        </div>
 
-                                {/* ACTION BUTTONS */}
-                                <div className="flex justify-end gap-4 pt-4">
-                                    <button
-                                        type="button"
-                                        onClick={onClose}
-                                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-6 rounded transition-colors"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded transition-colors"
-                                    >
-                                        Edit Listing
-                                    </button>
-                                </div>
-                            </form>
+                        {/* ACTION BUTTONS */}
+                        <div className="flex justify-end gap-4 pt-4">
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-6 rounded transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded transition-colors"
+                            >
+                                Edit Listing
+                            </button>
+                        </div>
+                    </form>
                 )}
             </div>
         </div>
