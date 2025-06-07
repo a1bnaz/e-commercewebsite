@@ -1,5 +1,3 @@
-// Makes Vercel fal back to index.html for unknown paths.
-// This tells Vercel: "For any route, just serve /index.html and let the React Router handle it."
 
 {
     "rewrites": [
