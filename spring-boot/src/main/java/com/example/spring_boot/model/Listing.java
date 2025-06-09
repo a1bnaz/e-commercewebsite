@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
+//test
 @Entity
 @Table(name="listings") // sets the name of the table, default name is the name of the class
 public class Listing {
